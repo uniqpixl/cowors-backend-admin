@@ -259,3 +259,71 @@ For support and questions:
 ---
 
 **Built with ❤️ for modern workspace management**
+
+## 📦 Packages
+
+The repository includes essential packages that provide shared functionality across the applications:
+
+### Core Packages
+
+#### @cowors/admin-sdk
+- **Purpose**: Admin SDK with type-safe API client and authentication
+- **Used by**: admin-mvp
+- **Features**: 
+  - Base API client with error handling and retry logic
+  - Admin-specific services (dashboard, users, partners, bookings, analytics)
+  - Authentication integration with role validation
+  - TypeScript support with comprehensive interfaces
+
+#### @cowors/shared-types
+- **Purpose**: Shared TypeScript types and enums for all Cowors applications
+- **Used by**: admin-mvp, backend-server, and all SDKs
+- **Features**:
+  - User types and enums (UserRole, UserStatus)
+  - Booking types and enums
+  - Payment types and enums
+  - Space types and enums
+  - API response types
+
+#### @cowors/shared-auth
+- **Purpose**: Shared authentication utilities and configurations
+- **Used by**: admin-mvp
+- **Features**:
+  - Better Auth integration
+  - Cross-application authentication flows
+  - Error handling utilities
+  - Authentication middleware
+
+#### @cowors/api-codegen
+- **Purpose**: OpenAPI to Zod schema generator for type-safe API clients
+- **Features**:
+  - Generates TypeScript types from OpenAPI specs
+  - Creates Zod schemas for runtime validation
+  - Supports filtering by API endpoints (admin, user, partner)
+  - CLI tool for automated code generation
+
+### Package Dependencies
+
+```
+admin-mvp
+├── @cowors/admin-sdk
+├── @cowors/shared-types
+└── @cowors/shared-auth
+
+backend-server
+└── @cowors/shared-types
+
+@cowors/admin-sdk
+└── @cowors/shared-types
+
+@cowors/shared-auth
+└── @cowors/shared-types
+```
+
+### Development Workflow
+
+1. **Install Dependencies**: Each package has its own `package.json` with specific dependencies
+2. **Build Packages**: Run `npm run build` in each package directory to compile TypeScript
+3. **Link Packages**: Use workspace linking for local development
+4. **Generate API Clients**: Use `@cowors/api-codegen` to generate type-safe API clients from OpenAPI specs
+

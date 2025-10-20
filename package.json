@@ -1,0 +1,34 @@
+{
+  "name": "cowors-backend-admin",
+  "version": "1.0.0",
+  "description": "Cowors MVP Backend Server and Admin Application",
+  "private": true,
+  "workspaces": [
+    "admin-mvp",
+    "backend-server", 
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:admin": "cd admin-mvp && npm run dev",
+    "dev:backend": "cd backend-server && npm run start:dev",
+    "build:admin": "cd admin-mvp && npm run build",
+    "build:backend": "cd backend-server && npm run build",
+    "build:packages": "npm run build --workspaces --if-present",
+    "install:all": "pnpm install",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "keywords": [
+    "cowors",
+    "backend",
+    "admin",
+    "nestjs",
+    "nextjs",
+    "typescript"
+  ],
+  "author": "Cowors Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

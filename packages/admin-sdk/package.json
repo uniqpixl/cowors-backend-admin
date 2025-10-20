@@ -1,0 +1,89 @@
+{
+  "name": "@cowors/admin-sdk",
+  "version": "1.0.0",
+  "description": "Admin SDK for Cowors applications with type-safe API client and authentication",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./client": {
+      "import": "./dist/client/index.esm.js",
+      "require": "./dist/client/index.js",
+      "types": "./dist/client/index.d.ts"
+    },
+    "./services": {
+      "import": "./dist/services/index.esm.js",
+      "require": "./dist/services/index.js",
+      "types": "./dist/services/index.d.ts"
+    },
+    "./auth": {
+      "import": "./dist/auth/index.esm.js",
+      "require": "./dist/auth/index.js",
+      "types": "./dist/auth/index.d.ts"
+    },
+    "./generated": {
+      "import": "./dist/generated/index.esm.js",
+      "require": "./dist/generated/index.js",
+      "types": "./dist/generated/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "@cowors/shared-types": "file:../shared-types",
+    "axios": "^1.12.2",
+    "tsx": "^4.20.5",
+    "zod": "^4.1.8"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.9.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/node": "^20.10.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "@vitest/ui": "^1.0.0",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.8.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cowors/cowors-mvp.git",
+    "directory": "packages/admin-sdk"
+  },
+  "keywords": [
+    "cowors",
+    "admin",
+    "sdk",
+    "typescript",
+    "api-client",
+    "better-auth"
+  ],
+  "author": "Cowors Team",
+  "license": "MIT"
+}

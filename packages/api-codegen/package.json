@@ -1,0 +1,49 @@
+{
+  "name": "@cowors/api-codegen",
+  "version": "1.0.0",
+  "description": "OpenAPI to Zod schema generator for Cowors SDKs",
+  "main": "dist/index.js",
+  "bin": {
+    "cowors-codegen": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "generate": "node dist/cli-simple.js",
+    "generate:admin": "npm run build && node dist/cli-simple.js --input http://localhost:5001/swagger/json --output ../admin-sdk/src/generated --name AdminAPI --filter admin",
+    "generate:user": "npm run build && node dist/cli-simple.js --input http://localhost:5001/swagger/json --output ../user-sdk/src/generated --name UserAPI --filter user",
+    "generate:partner": "npm run build && node dist/cli-simple.js --input http://localhost:5001/swagger/json --output ../partner-sdk/src/generated --name PartnerAPI --filter partner",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "zod": "^3.22.4",
+    "commander": "^11.1.0",
+    "chalk": "^5.3.0",
+    "fs-extra": "^11.2.0",
+    "openapi-typescript": "^6.7.3",
+    "openapi-zod-client": "^1.15.1",
+    "@apidevtools/swagger-parser": "^10.1.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/lodash": "^4.14.202",
+    "tsx": "^4.6.2",
+    "typescript": "^5.3.3",
+    "rimraf": "^5.0.5"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "keywords": [
+    "openapi",
+    "zod",
+    "codegen",
+    "typescript",
+    "validation"
+  ],
+  "author": "Cowors Team",
+  "license": "MIT"
+}

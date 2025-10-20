@@ -1,0 +1,83 @@
+{
+  "name": "@cowors/shared-types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types and enums for Cowors applications",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./user": {
+      "import": "./dist/user/index.esm.js",
+      "require": "./dist/user/index.js",
+      "types": "./dist/user/index.d.ts"
+    },
+    "./booking": {
+      "import": "./dist/booking/index.esm.js",
+      "require": "./dist/booking/index.js",
+      "types": "./dist/booking/index.d.ts"
+    },
+    "./payment": {
+      "import": "./dist/payment/index.esm.js",
+      "require": "./dist/payment/index.js",
+      "types": "./dist/payment/index.d.ts"
+    },
+    "./space": {
+      "import": "./dist/space/index.esm.js",
+      "require": "./dist/space/index.js",
+      "types": "./dist/space/index.d.ts"
+    },
+    "./api": {
+      "import": "./dist/api/index.esm.js",
+      "require": "./dist/api/index.js",
+      "types": "./dist/api/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/node": "^20.10.0",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.8.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.9.0"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cowors/cowors-mvp.git",
+    "directory": "packages/shared-types"
+  },
+  "keywords": [
+    "cowors",
+    "typescript",
+    "types",
+    "shared",
+    "enums"
+  ],
+  "author": "Cowors Team",
+  "license": "MIT",
+  "dependencies": {
+    "tslib": "^2.8.1"
+  }
+}
