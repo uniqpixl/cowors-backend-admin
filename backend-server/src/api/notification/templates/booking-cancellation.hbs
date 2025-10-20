@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Cancelled - Cowors</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 24px;
+            color: #dc2626;
+            margin-bottom: 20px;
+        }
+        .booking-details {
+            background-color: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .refund-details {
+            background-color: #f0fdf4;
+            border-left: 4px solid #059669;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #374151;
+        }
+        .detail-value {
+            color: #1f2937;
+        }
+        .refund-amount {
+            font-weight: bold;
+            font-size: 18px;
+            color: #059669;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        .cta-button:hover {
+            background-color: #1d4ed8;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #6b7280;
+            text-align: center;
+        }
+        .highlight {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        .cancel-icon {
+            font-size: 48px;
+            color: #dc2626;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Cowors</div>
+            <div class="cancel-icon">❌</div>
+            <h1 class="title">Booking Cancelled</h1>
+        </div>
+        
+        <div class="content">
+            <p>Hi <span class="highlight">{{customerName}}</span>,</p>
+            
+            <p>We've processed your cancellation request. Here are the details of your cancelled booking:</p>
+            
+            <div class="booking-details">
+                <div class="detail-row">
+                    <span class="detail-label">Booking ID:</span>
+                    <span class="detail-value">{{bookingId}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Workspace:</span>
+                    <span class="detail-value">{{spaceName}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Check-in Date:</span>
+                    <span class="detail-value">{{checkInDate}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Check-out Date:</span>
+                    <span class="detail-value">{{checkOutDate}}</span>
+                </div>
+                {{#if cancellationReason}}
+                <div class="detail-row">
+                    <span class="detail-label">Reason:</span>
+                    <span class="detail-value">{{cancellationReason}}</span>
+                </div>
+                {{/if}}
+            </div>
+            
+            {{#if refundAmount}}
+            <div class="refund-details">
+                <h3 style="margin-top: 0; color: #059669;">💰 Refund Information</h3>
+                <div class="detail-row">
+                    <span class="detail-label">Refund Amount:</span>
+                    <span class="detail-value refund-amount">${{refundAmount}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Refund Method:</span>
+                    <span class="detail-value">{{refundMethod}}</span>
+                </div>
+                <p style="margin-bottom: 0; font-size: 14px; color: #6b7280;">Your refund will be processed within 3-5 business days.</p>
+            </div>
+            {{/if}}
+            
+            <p>We're sorry to see you go, but we understand that plans can change. We hope to serve you again in the future!</p>
+            
+            <p><strong>Looking for another workspace?</strong></p>
+            <p>Browse our available spaces and find your perfect match:</p>
+            
+            <div style="text-align: center;">
+                <a href="{{searchUrl}}" class="cta-button">Find New Workspace</a>
+            </div>
+            
+            <p>If you have any questions about this cancellation or need assistance with a new booking, our support team is here to help.</p>
+            
+            <p>Thank you for choosing Cowors.</p>
+            
+            <p><strong>The Cowors Team</strong></p>
+        </div>
+        
+        <div class="footer">
+            <p>Cancellation confirmation sent to {{customerName}}</p>
+            <p>&copy; 2024 Cowors. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Application Update - Cowors</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .title.approved {
+            color: #059669;
+        }
+        .title.rejected {
+            color: #dc2626;
+        }
+        .title.pending {
+            color: #d97706;
+        }
+        .title.under_review {
+            color: #7c3aed;
+        }
+        .status-box {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            border-left: 4px solid;
+        }
+        .status-box.approved {
+            background-color: #f0fdf4;
+            border-left-color: #059669;
+        }
+        .status-box.rejected {
+            background-color: #fef2f2;
+            border-left-color: #dc2626;
+        }
+        .status-box.pending {
+            background-color: #fffbeb;
+            border-left-color: #d97706;
+        }
+        .status-box.under_review {
+            background-color: #faf5ff;
+            border-left-color: #7c3aed;
+        }
+        .status-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .status-icon.approved {
+            color: #059669;
+        }
+        .status-icon.rejected {
+            color: #dc2626;
+        }
+        .status-icon.pending {
+            color: #d97706;
+        }
+        .status-icon.under_review {
+            color: #7c3aed;
+        }
+        .business-info {
+            background-color: #f0f9ff;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        .cta-button:hover {
+            background-color: #1d4ed8;
+        }
+        .cta-button.success {
+            background-color: #059669;
+        }
+        .cta-button.success:hover {
+            background-color: #047857;
+        }
+        .cta-button.warning {
+            background-color: #d97706;
+        }
+        .cta-button.warning:hover {
+            background-color: #b45309;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #6b7280;
+            text-align: center;
+        }
+        .highlight {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        .next-steps {
+            background-color: #f9fafb;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .next-steps h4 {
+            margin-top: 0;
+            color: #374151;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Cowors</div>
+            {{#if (eq status 'approved')}}
+                <div class="status-icon approved">🎉</div>
+                <h1 class="title approved">Welcome to Cowors Partners!</h1>
+            {{else if (eq status 'rejected')}}
+                <div class="status-icon rejected">❌</div>
+                <h1 class="title rejected">Partner Application Update</h1>
+            {{else if (eq status 'pending')}}
+                <div class="status-icon pending">📋</div>
+                <h1 class="title pending">Application Received</h1>
+            {{else}}
+                <div class="status-icon under_review">🔍</div>
+                <h1 class="title under_review">Application Under Review</h1>
+            {{/if}}
+        </div>
+        
+        <div class="content">
+            <p>Hi <span class="highlight">{{partnerName}}</span>,</p>
+            
+            {{#if businessName}}
+            <div class="business-info">
+                <p><strong>Business:</strong> {{businessName}}</p>
+            </div>
+            {{/if}}
+            
+            {{#if (eq status 'approved')}}
+                <div class="status-box approved">
+                    <p><strong>Congratulations!</strong> Your partner application has been approved. Welcome to the Cowors partner network!</p>
+                    
+                    <p>You now have access to:</p>
+                    <ul>
+                        <li>🏢 Partner dashboard and analytics</li>
+                        <li>💰 Revenue management tools</li>
+                        <li>📊 Booking and performance insights</li>
+                        <li>🎯 Marketing and promotional features</li>
+                        <li>🛠️ Space management tools</li>
+                        <li>📞 Dedicated partner support</li>
+                    </ul>
+                    
+                    <p><strong>Ready to get started?</strong></p>
+                    <p>Access your partner dashboard to begin listing your spaces and managing bookings.</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="{{dashboardUrl}}" class="cta-button success">Access Partner Dashboard</a>
+                </div>
+                
+            {{else if (eq status 'rejected')}}
+                <div class="status-box rejected">
+                    <p><strong>Thank you for your interest in becoming a Cowors partner.</strong></p>
+                    <p>After careful review, we're unable to approve your application at this time.</p>
+                    
+                    {{#if rejectionReason}}
+                    <p><strong>Reason:</strong></p>
+                    <p>{{rejectionReason}}</p>
+                    {{/if}}
+                    
+                    <p>We encourage you to reapply in the future when you meet our partnership criteria. Our requirements may change, and we'd love to work with you when the timing is right.</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="{{supportUrl}}" class="cta-button">Contact Support</a>
+                </div>
+                
+            {{else if (eq status 'pending')}}
+                <div class="status-box pending">
+                    <p><strong>Thank you for applying to become a Cowors partner!</strong></p>
+                    <p>We've received your application and will begin the review process shortly.</p>
+                    
+                    <p><strong>What happens next:</strong></p>
+                    <ul>
+                        <li>📋 Initial application review (1-2 business days)</li>
+                        <li>🔍 Detailed evaluation of your spaces and business</li>
+                        <li>📞 Possible follow-up call or additional information request</li>
+                        <li>✅ Final approval decision</li>
+                    </ul>
+                    
+                    <p>The entire process typically takes 3-7 business days. We'll keep you updated throughout!</p>
+                </div>
+                
+            {{else}}
+                <div class="status-box under_review">
+                    <p><strong>Your partner application is currently under review.</strong></p>
+                    <p>Our team is carefully evaluating your application and the spaces you wish to list.</p>
+                    
+                    {{#if nextSteps}}
+                    <div class="next-steps">
+                        <h4>Next Steps:</h4>
+                        <p>{{nextSteps}}</p>
+                    </div>
+                    {{/if}}
+                    
+                    <p>We appreciate your patience during this process. We'll notify you as soon as we have an update.</p>
+                </div>
+            {{/if}}
+            
+            {{#if (eq status 'approved')}}
+                <div class="next-steps">
+                    <h4>🚀 Getting Started Tips:</h4>
+                    <ul>
+                        <li>Complete your space listings with high-quality photos</li>
+                        <li>Set competitive pricing for your market</li>
+                        <li>Enable instant booking for better visibility</li>
+                        <li>Respond quickly to booking inquiries</li>
+                        <li>Maintain excellent guest communication</li>
+                    </ul>
+                </div>
+            {{/if}}
+            
+            <p>If you have any questions about your application or the partner program, our team is here to help.</p>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="{{supportUrl}}" style="color: #6b7280; text-decoration: none;">Contact Partner Support</a>
+            </div>
+            
+            <p>Thank you for your interest in partnering with Cowors!</p>
+            
+            <p><strong>The Cowors Partnership Team</strong></p>
+        </div>
+        
+        <div class="footer">
+            <p>Partner application update sent to {{partnerName}}</p>
+            {{#if businessName}}
+            <p>Business: {{businessName}}</p>
+            {{/if}}
+            <p>&copy; 2024 Cowors. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

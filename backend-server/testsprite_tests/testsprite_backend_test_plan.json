@@ -1,0 +1,52 @@
+[
+  {
+    "id": "TC001",
+    "title": "test_user_login_functionality",
+    "description": "Verify that the user can successfully log in using the /api/auth/login endpoint with valid credentials and receive a valid JWT token."
+  },
+  {
+    "id": "TC002",
+    "title": "test_user_registration_process",
+    "description": "Verify that a new user can register successfully using the /api/auth/register endpoint and that the user data is stored correctly."
+  },
+  {
+    "id": "TC003",
+    "title": "test_user_logout_functionality",
+    "description": "Verify that a logged-in user can successfully log out using the /api/auth/logout endpoint and that the session or token is invalidated."
+  },
+  {
+    "id": "TC004",
+    "title": "test_get_all_users_endpoint",
+    "description": "Verify that the /api/users GET endpoint returns a list of all users with correct data and respects authorization rules."
+  },
+  {
+    "id": "TC005",
+    "title": "test_create_user_endpoint",
+    "description": "Verify that a new user can be created successfully using the /api/users POST endpoint with valid input data."
+  },
+  {
+    "id": "TC006",
+    "title": "test_get_user_by_id_endpoint",
+    "description": "Verify that the /api/users/{id} GET endpoint returns the correct user details for a valid user ID and handles invalid IDs gracefully."
+  },
+  {
+    "id": "TC007",
+    "title": "test_update_user_endpoint",
+    "description": "Verify that the /api/users/{id} PATCH endpoint updates user information correctly and validates input data."
+  },
+  {
+    "id": "TC008",
+    "title": "test_get_all_partners_endpoint",
+    "description": "Verify that the /api/partners GET endpoint returns a list of all partners with correct data and respects authorization rules."
+  },
+  {
+    "id": "TC009",
+    "title": "test_create_partner_endpoint",
+    "description": "Verify that a new partner can be created successfully using the /api/partners POST endpoint with valid input data."
+  },
+  {
+    "id": "TC010",
+    "title": "test_get_current_partner_profile",
+    "description": "Verify that the /api/partners/me GET endpoint returns the profile of the currently authenticated partner."
+  }
+]

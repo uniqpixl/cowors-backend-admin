@@ -1,0 +1,818 @@
+{
+  "meta": {
+    "project": "Cowors Backend MVP Build Plan",
+    "date": "2025-08-31",
+    "prepared_by": "Software Development Manager"
+  },
+  "product_overview": "Cowors is a comprehensive backend platform designed for a coworking space marketplace MVP, enabling efficient management of partners, spaces, bookings, payments, and user interactions with robust authentication, analytics, and notification systems.",
+  "core_goals": [
+    "Implement a robust, production-ready backend using NestJS and PostgreSQL for the Cowors MVP",
+    "Provide complete authentication and role-based authorization for platform users",
+    "Support partner onboarding and space management with flexible booking and availability features",
+    "Integrate payment processing with Stripe and Razorpay including wallet and refund management",
+    "Deliver operational notifications and real-time messaging for users and partners",
+    "Enable analytics and reporting functionalities for users, partners, and administrators",
+    "Ensure compliance with security standards including PCI DSS, GST, and RBI KYC requirements",
+    "Adopt a simplified single database architecture to accelerate development and ease maintenance",
+    "Provide comprehensive testing coverage and deploy efficiently on Contabo VPS infrastructure"
+  ],
+  "key_features": [
+    "Authentication & Authorization with Better Auth, JWT, 2FA and role-based access control",
+    "User Management including profiles and KYC verification",
+    "Partner Management supporting space partners with onboarding, profile and analytics",
+    "Space Management with listings, availability rules, and booking integrations",
+    "Booking System supporting real-time availability, booking creation, modification, and cancellations",
+    "Payment Processing via Stripe and Razorpay with refund handling and wallet system",
+    "Notification System supporting multi-channel delivery: email, SMS, and push notifications",
+    "File Management integrated with AWS S3 for uploads and image processing",
+    "Analytics & Reporting for business intelligence and partner performance",
+    "Content Management System to manage website content and media",
+    "Audit & Logging for system health checks and security",
+    "Fraud Detection and Content Moderation for trust and safety",
+    "Coupon System for promotions and discounts",
+    "Dynamic Pricing engine for flexible price calculations",
+    "Messaging System using WebSockets for real-time communication",
+    "Admin Panel for system-wide user, partner, and analytics management"
+  ],
+  "user_flow_summary": [
+    "User registers and logs in via secure authentication supporting JWT and 2FA",
+    "User searches available spaces filtered by location and availability",
+    "User selects a space and creates a booking with optional add-ons",
+    "User processes payment with choice of Stripe or Razorpay gateway",
+    "User receives booking confirmation through email/SMS notifications",
+    "Partners onboard, register their space offerings, and manage availability and pricing",
+    "Partners view analytics dashboards for booking and revenue insights",
+    "Administrators perform user and partner management and view system analytics",
+    "Users interact with partners and admins via real-time messaging system",
+    "Wallet system handles refunds and promotional credits with balance type validations"
+  ],
+  "validation_criteria": [
+    "All API endpoints conform to documented OpenAPI standards with versioning (/api/v1/)",
+    "Authentication and authorization enforce role-based access correctly",
+    "Payment processing completes successfully with Stripe and Razorpay integration including webhook handling",
+    "Bookings reflect accurate availability and prevent conflicts",
+    "Wallet balances have correct types and withdrawal restrictions enforced",
+    "Notifications are sent reliably via configured channels and preferences are respected",
+    "Critical business workflows (booking, payment, partner onboarding) have test coverage exceeding 80%",
+    "System health endpoints and monitoring metrics are functional",
+    "Data schema migrations applied successfully matching designed entities",
+    "Performance SLAs for critical endpoints meet latency and throughput targets",
+    "Security measures including rate limiting, API security headers, and audit logs are implemented",
+    "Deployment scripts provide repeatable VPS setup and rollback capabilities"
+  ],
+  "code_summary": {
+    "tech_stack": [
+      "TypeScript",
+      "Node.js",
+      "NestJS",
+      "Fastify",
+      "PostgreSQL",
+      "TypeORM",
+      "Redis",
+      "Bull/BullMQ",
+      "Socket.IO",
+      "Better Auth",
+      "Swagger/OpenAPI",
+      "AWS S3",
+      "Stripe",
+      "Twilio",
+      "Sentry",
+      "Prometheus",
+      "Docker",
+      "Jest",
+      "Pino Logger",
+      "React Email"
+    ],
+    "features": [
+      {
+        "name": "Authentication & Authorization",
+        "description": "Complete authentication system with Better Auth, JWT tokens, role-based access control, and session management",
+        "files": [
+          "src/auth/auth.service.ts",
+          "src/auth/better-auth.service.ts",
+          "src/auth/auth.guard.ts",
+          "src/guards/roles.guard.ts",
+          "src/api/role/role.controller.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/auth/login": {
+              "post": {
+                "summary": "User login",
+                "tags": [
+                  "Authentication"
+                ]
+              }
+            },
+            "/api/auth/register": {
+              "post": {
+                "summary": "User registration",
+                "tags": [
+                  "Authentication"
+                ]
+              }
+            },
+            "/api/auth/logout": {
+              "post": {
+                "summary": "User logout",
+                "tags": [
+                  "Authentication"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "User Management",
+        "description": "Complete user management system with profiles, KYC verification, and user analytics",
+        "files": [
+          "src/api/user/user.controller.ts",
+          "src/api/user/user.service.ts",
+          "src/api/user/kyc-verification.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/users": {
+              "get": {
+                "summary": "Get all users",
+                "tags": [
+                  "Users"
+                ]
+              },
+              "post": {
+                "summary": "Create user",
+                "tags": [
+                  "Users"
+                ]
+              }
+            },
+            "/api/users/{id}": {
+              "get": {
+                "summary": "Get user by ID",
+                "tags": [
+                  "Users"
+                ]
+              },
+              "patch": {
+                "summary": "Update user",
+                "tags": [
+                  "Users"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Partner Management",
+        "description": "Partner onboarding, profile management, analytics, and commission tracking",
+        "files": [
+          "src/api/partner/partner.controller.ts",
+          "src/api/partner/partner.service.ts",
+          "src/controllers/partner-analytics.controller.ts",
+          "src/controllers/partner-commission-settings.controller.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/partners": {
+              "get": {
+                "summary": "Get all partners",
+                "tags": [
+                  "Partners"
+                ]
+              },
+              "post": {
+                "summary": "Create partner",
+                "tags": [
+                  "Partners"
+                ]
+              }
+            },
+            "/api/partners/me": {
+              "get": {
+                "summary": "Get current partner profile",
+                "tags": [
+                  "Partners"
+                ]
+              }
+            },
+            "/api/v1/partners/{partnerId}/analytics/dashboard": {
+              "get": {
+                "summary": "Get partner dashboard analytics",
+                "tags": [
+                  "Partner Analytics"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Space Management",
+        "description": "Workspace and space management with listings, availability, and booking integration",
+        "files": [
+          "src/api/space/space.controller.ts",
+          "src/api/space/space.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/spaces": {
+              "get": {
+                "summary": "Get all spaces",
+                "tags": [
+                  "Spaces"
+                ]
+              },
+              "post": {
+                "summary": "Create space",
+                "tags": [
+                  "Spaces"
+                ]
+              }
+            },
+            "/api/spaces/{id}": {
+              "get": {
+                "summary": "Get space by ID",
+                "tags": [
+                  "Spaces"
+                ]
+              },
+              "patch": {
+                "summary": "Update space",
+                "tags": [
+                  "Spaces"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Booking System",
+        "description": "Complete booking management with reservations, scheduling, and availability tracking",
+        "files": [
+          "src/api/booking/booking.controller.ts",
+          "src/api/booking/booking.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/bookings": {
+              "get": {
+                "summary": "Get all bookings",
+                "tags": [
+                  "Bookings"
+                ]
+              },
+              "post": {
+                "summary": "Create booking",
+                "tags": [
+                  "Bookings"
+                ]
+              }
+            },
+            "/api/bookings/{id}": {
+              "get": {
+                "summary": "Get booking by ID",
+                "tags": [
+                  "Bookings"
+                ]
+              },
+              "patch": {
+                "summary": "Update booking",
+                "tags": [
+                  "Bookings"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Payment Processing",
+        "description": "Stripe integration for payments, invoicing, and financial transactions",
+        "files": [
+          "src/api/payment/payment.controller.ts",
+          "src/api/payment/payment.service.ts",
+          "src/api/invoice/invoice.controller.ts",
+          "src/controllers/payout.controller.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/payments": {
+              "post": {
+                "summary": "Process payment",
+                "tags": [
+                  "Payments"
+                ]
+              }
+            },
+            "/api/invoices": {
+              "get": {
+                "summary": "Get invoices",
+                "tags": [
+                  "Invoices"
+                ]
+              },
+              "post": {
+                "summary": "Create invoice",
+                "tags": [
+                  "Invoices"
+                ]
+              }
+            },
+            "/api/payouts": {
+              "get": {
+                "summary": "Get payouts",
+                "tags": [
+                  "Payouts"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Location Services",
+        "description": "Geographic location management with cities, regions, and expansion tracking",
+        "files": [
+          "src/api/location/location.controller.ts",
+          "src/api/location/location.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/locations": {
+              "get": {
+                "summary": "Get all locations",
+                "tags": [
+                  "Locations"
+                ]
+              },
+              "post": {
+                "summary": "Create location",
+                "tags": [
+                  "Locations"
+                ]
+              }
+            },
+            "/api/locations/{id}": {
+              "get": {
+                "summary": "Get location by ID",
+                "tags": [
+                  "Locations"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Review System",
+        "description": "User and partner review system with ratings and feedback management",
+        "files": [
+          "src/api/review/review.controller.ts",
+          "src/api/review/review.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/reviews": {
+              "get": {
+                "summary": "Get all reviews",
+                "tags": [
+                  "Reviews"
+                ]
+              },
+              "post": {
+                "summary": "Create review",
+                "tags": [
+                  "Reviews"
+                ]
+              }
+            },
+            "/api/reviews/partner/{partnerId}": {
+              "get": {
+                "summary": "Get partner reviews",
+                "tags": [
+                  "Reviews"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Messaging System",
+        "description": "Real-time messaging between users and partners with WebSocket support",
+        "files": [
+          "src/api/message/message.controller.ts",
+          "src/api/message/message.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/messages": {
+              "get": {
+                "summary": "Get messages",
+                "tags": [
+                  "Messages"
+                ]
+              },
+              "post": {
+                "summary": "Send message",
+                "tags": [
+                  "Messages"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Notification System",
+        "description": "Multi-channel notification system with email, SMS, and push notifications",
+        "files": [
+          "src/api/notification/notification.controller.ts",
+          "src/api/notification/notification.service.ts",
+          "src/api/notification/notification.gateway.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/notifications": {
+              "get": {
+                "summary": "Get notifications",
+                "tags": [
+                  "Notifications"
+                ]
+              },
+              "post": {
+                "summary": "Send notification",
+                "tags": [
+                  "Notifications"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "File Management",
+        "description": "File upload and management with AWS S3 integration and image processing",
+        "files": [
+          "src/api/file/file.controller.ts",
+          "src/api/file/file.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/files/upload": {
+              "post": {
+                "summary": "Upload file",
+                "tags": [
+                  "Files"
+                ]
+              }
+            },
+            "/api/files/{id}": {
+              "get": {
+                "summary": "Get file by ID",
+                "tags": [
+                  "Files"
+                ]
+              },
+              "delete": {
+                "summary": "Delete file",
+                "tags": [
+                  "Files"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Analytics & Reporting",
+        "description": "Comprehensive analytics system with business intelligence and reporting",
+        "files": [
+          "src/api/analytics/analytics.controller.ts",
+          "src/api/analytics/analytics.service.ts",
+          "src/controllers/financial-report.controller.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/analytics": {
+              "get": {
+                "summary": "Get analytics data",
+                "tags": [
+                  "Analytics"
+                ]
+              }
+            },
+            "/api/analytics/stats": {
+              "get": {
+                "summary": "Get analytics statistics",
+                "tags": [
+                  "Analytics"
+                ]
+              }
+            },
+            "/api/financial-reports": {
+              "get": {
+                "summary": "Get financial reports",
+                "tags": [
+                  "Financial Reports"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Admin Panel",
+        "description": "Comprehensive admin dashboard with user management, analytics, and system controls",
+        "files": [
+          "src/api/admin/admin.controller.ts",
+          "src/api/admin/admin.service.ts",
+          "src/api/admin/admin-partner.controller.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/admin/users": {
+              "get": {
+                "summary": "Get all users (admin)",
+                "tags": [
+                  "Admin"
+                ]
+              }
+            },
+            "/api/admin/analytics/platform-stats": {
+              "get": {
+                "summary": "Get platform statistics",
+                "tags": [
+                  "Admin"
+                ]
+              }
+            },
+            "/api/admin/partners": {
+              "get": {
+                "summary": "Get all partners (admin)",
+                "tags": [
+                  "Admin - Partners"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Content Management System",
+        "description": "CMS for managing website content, pages, and media with versioning",
+        "files": [
+          "src/modules/cms/cms.controller.ts",
+          "src/modules/cms/cms.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/cms/pages": {
+              "get": {
+                "summary": "Get all content pages",
+                "tags": [
+                  "CMS"
+                ]
+              },
+              "post": {
+                "summary": "Create content page",
+                "tags": [
+                  "CMS"
+                ]
+              }
+            },
+            "/api/cms/pages/published": {
+              "get": {
+                "summary": "Get published pages",
+                "tags": [
+                  "CMS"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Audit & Logging",
+        "description": "System audit trails, logging, and monitoring with health checks",
+        "files": [
+          "src/api/audit/audit.controller.ts",
+          "src/api/audit/audit.service.ts",
+          "src/api/health/health.controller.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/audit/logs": {
+              "get": {
+                "summary": "Get audit logs",
+                "tags": [
+                  "Audit"
+                ]
+              }
+            },
+            "/api/health": {
+              "get": {
+                "summary": "Health check",
+                "tags": [
+                  "Health"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Fraud Detection",
+        "description": "Fraud detection and prevention system with risk scoring",
+        "files": [
+          "src/api/fraud/fraud.controller.ts",
+          "src/api/fraud/services/fraud-detection.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/fraud/check": {
+              "post": {
+                "summary": "Check for fraud",
+                "tags": [
+                  "Fraud Detection"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Content Moderation",
+        "description": "Automated and manual content moderation system",
+        "files": [
+          "src/api/content-moderation/content-moderation.controller.ts",
+          "src/api/content-moderation/content-moderation.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/content-moderation/review": {
+              "post": {
+                "summary": "Submit content for moderation",
+                "tags": [
+                  "Content Moderation"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Coupon System",
+        "description": "Discount and coupon management system",
+        "files": [
+          "src/api/coupon/coupon.controller.ts",
+          "src/api/coupon/coupon.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/coupons": {
+              "get": {
+                "summary": "Get coupons",
+                "tags": [
+                  "Coupons"
+                ]
+              },
+              "post": {
+                "summary": "Create coupon",
+                "tags": [
+                  "Coupons"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Dispute Management",
+        "description": "Dispute resolution system for bookings and payments",
+        "files": [
+          "src/api/dispute/dispute.controller.ts",
+          "src/api/dispute/dispute.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/disputes": {
+              "get": {
+                "summary": "Get disputes",
+                "tags": [
+                  "Disputes"
+                ]
+              },
+              "post": {
+                "summary": "Create dispute",
+                "tags": [
+                  "Disputes"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Dynamic Pricing",
+        "description": "Dynamic pricing engine for space rentals",
+        "files": [
+          "src/api/dynamic-pricing/dynamic-pricing.controller.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/dynamic-pricing/calculate": {
+              "post": {
+                "summary": "Calculate dynamic price",
+                "tags": [
+                  "Dynamic Pricing"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "Wallet System",
+        "description": "Digital wallet for users and partners with transaction management",
+        "files": [
+          "src/api/wallet/wallet.controller.ts",
+          "src/api/wallet/wallet.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/wallets": {
+              "get": {
+                "summary": "Get wallet",
+                "tags": [
+                  "Wallets"
+                ]
+              }
+            },
+            "/api/wallets/transactions": {
+              "get": {
+                "summary": "Get wallet transactions",
+                "tags": [
+                  "Wallets"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "System Configuration",
+        "description": "System-wide configuration management",
+        "files": [
+          "src/api/system-config/system-config.controller.ts",
+          "src/api/system-config/system-config.service.ts"
+        ],
+        "api_doc": {
+          "openapi": "3.0.0",
+          "paths": {
+            "/api/system-config": {
+              "get": {
+                "summary": "Get system configurations",
+                "tags": [
+                  "System Config"
+                ]
+              }
+            },
+            "/api/system-config/public": {
+              "get": {
+                "summary": "Get public configurations",
+                "tags": [
+                  "System Config"
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
